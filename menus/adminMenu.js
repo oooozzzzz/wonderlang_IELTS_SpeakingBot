@@ -133,7 +133,7 @@ const changeVocabBoosterMenu = new Menu("changeVocabBoosterMenu")
 const changeEssayUpgradeMenu = new Menu("changeEssayUpgradeMenu")
 	.text("Изменить", async (ctx) => {
 		await ctx.msg.delete();
-		await ctx.conversation.enter("changeEssayUpgradePrompt");
+		await ctx.conversation.enter("changeEssayUpgraderPrompt");
 	})
 	.row()
 	.text(
