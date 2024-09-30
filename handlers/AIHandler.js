@@ -1,6 +1,6 @@
 const { InputFile } = require("grammy");
 const { clearGPTContext } = require("../context");
-const { getGPTAnswerWithContext, createWordFile } = require("../services");
+const { getGPTAnswerWithContext, createWordFile, sendWorkToAdmins, deleteFile } = require("../services");
 const { toMainMenuKeyboard } = require("../keyboards/toMainMenuKeyboard");
 module.exports = async (ctx) => {
 	const text = ctx.msg.text;
@@ -14,4 +14,6 @@ module.exports = async (ctx) => {
 	await ctx.api.sendDocument(ctx.chat.id, new InputFile(path), {
 		reply_markup: toMainMenuKeyboard(),
 	});
+	await sendWorkToAdmins(ctx, path, response, "training");
+	deleteFile(path);
 };
