@@ -356,6 +356,7 @@ const part1ThemeConversation = async (conversation, ctx) => {
 				);
 				break;
 			} else {
+
 				clearGPTContext(ctx.from.id)
 				await ctx.reply("Операция прервана", {
 					reply_markup: toMainMenuKeyboard(),
@@ -545,7 +546,7 @@ const changePart1Prompt = async (conversation, ctx) => {
 		});
 		return;
 	} else {
-		await setDirective("part1", message);
+		setDirective("part1", message);
 		ctx.reply("Промпт изменен", {
 			reply_markup: toAdminMenuKeyboard,
 		});
@@ -569,7 +570,7 @@ const changePart2Prompt = async (conversation, ctx) => {
 		});
 		return;
 	} else {
-		await setDirective("part2", message);
+		setDirective("part2", message);
 		ctx.reply("Промпт изменен", {
 			reply_markup: toAdminMenuKeyboard,
 		});
@@ -593,7 +594,7 @@ const changePart3Prompt = async (conversation, ctx) => {
 		});
 		return;
 	} else {
-		await setDirective("part3", message);
+		setDirective("part3", message);
 		ctx.reply("Промпт изменен", {
 			reply_markup: toAdminMenuKeyboard,
 		});
@@ -618,7 +619,7 @@ const changeVocabBoosterPrompt = async (conversation, ctx) => {
 		});
 		return;
 	} else {
-		await setDirective("vocab_booster", message);
+		setDirective("vocab_booster", message);
 		ctx.reply("Промпт изменен", {
 			reply_markup: toAdminMenuKeyboard,
 		});
@@ -643,7 +644,7 @@ const changeEssayUpgraderPrompt = async (conversation, ctx) => {
 		});
 		return;
 	} else {
-		await setDirective("IELTS_essay_upgrade", message);
+		setDirective("IELTS_essay_upgrade", message);
 		ctx.reply("Промпт изменен", {
 			reply_markup: toAdminMenuKeyboard,
 		});
