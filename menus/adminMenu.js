@@ -11,18 +11,6 @@ const adminMenu = new Menu("adminMenu")
 	})
 	.row()
 	.text(
-		async (ctx) => {
-			return `Получать уведомления ${
-				(await userGetsNotifications(ctx.from.id)) ? "🔔" : "🔕"
-			}`;
-		},
-		async (ctx) => {
-			await toggleNotifications(ctx.from.id);
-			ctx.menu.update();
-		}
-	)
-	.row()
-	.text(
 		(ctx) => ctx.t("close"),
 		async (ctx) => {
 			ctx.msg.delete();
