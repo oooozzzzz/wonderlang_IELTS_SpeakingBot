@@ -12,7 +12,6 @@ const {
 	deleteFile,
 } = require("./services");
 const { votePollHandler } = require("./handlers/votePollHandler");
-const AIHandler = require("./handlers/AIHandler");
 const photoHandler = require("./handlers/photoHandler");
 const { clearGPTContext } = require("./context");
 const { toMainMenuKeyboard } = require("./keyboards/toMainMenuKeyboard");
@@ -73,7 +72,6 @@ bot.on(":text", async (ctx) => {
 			await ownerHandler(ctx);
 			break;
 		default:
-			await AIHandler(ctx);
 			break;
 	}
 });
