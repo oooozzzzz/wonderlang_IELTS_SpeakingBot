@@ -39,7 +39,7 @@ const promptsMenu = new Menu("promptsMenu")
 		});
 	})
 	.row()
-	.text("Vocabularly", async (ctx) => {
+	.text("Vocabulary", async (ctx) => {
 		const prompt = await getDirective("vocab_booster");
 		ctx.menu.nav("changeVocabBoosterMenu");
 		await ctx.msg.editText(`Текущий промт \n\n${prompt}`, {
