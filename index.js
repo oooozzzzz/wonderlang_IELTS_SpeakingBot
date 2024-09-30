@@ -46,7 +46,7 @@ bot.callbackQuery("ok", async (ctx) => {
 	await ctx.reply(`Ваш ответ: \n${answer}`);
 	await ctx.api.sendChatAction(ctx.from.id, "upload_document");
 	const reply = await getGPTAnswerWithContext(ctx.from.id, answer);
-	const path = await createWordFile(reply, ctx.from.username, "part1");
+	const path = await createWordFile(reply, ctx.from.username, "speaking");
 	await ctx.api.sendDocument(ctx.chat.id, new InputFile(path), {
 		reply_markup: toMainMenuKeyboard(),
 	});
