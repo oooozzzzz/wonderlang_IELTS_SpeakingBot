@@ -1,7 +1,4 @@
 const { Menu } = require("@grammyjs/menu");
-
-const { userGetsNotifications } = require("../db");
-const { toggleNotifications } = require("../services");
 const { getDirective } = require("../directives");
 
 const adminMenu = new Menu("adminMenu")
@@ -19,7 +16,7 @@ const adminMenu = new Menu("adminMenu")
 
 const promptsMenu = new Menu("promptsMenu")
 	.text("Part1", async (ctx) => {
-		const prompt = getDirective("part1");
+		const prompt = await getDirective("part1");
 		await ctx.msg.editText(`Текущий промт \n\n${prompt}`, {
 			parse_mode: "HTML",
 		});
@@ -27,7 +24,7 @@ const promptsMenu = new Menu("promptsMenu")
 	})
 	.row()
 	.text("Part2", async (ctx) => {
-		const prompt = getDirective("part2");
+		const prompt = await getDirective("part2");
 		await ctx.msg.editText(`Текущий промт \n\n${prompt}`, {
 			parse_mode: "HTML",
 		});
@@ -35,7 +32,7 @@ const promptsMenu = new Menu("promptsMenu")
 	})
 	.row()
 	.text("Part3", async (ctx) => {
-		const prompt = getDirective("part3");
+		const prompt = await getDirective("part3");
 		await ctx.msg.editText(`Текущий промт \n\n${prompt}`, {
 			parse_mode: "HTML",
 		});
@@ -43,7 +40,7 @@ const promptsMenu = new Menu("promptsMenu")
 	})
 	.row()
 	.text("Vocabularly", async (ctx) => {
-		const prompt = getDirective("vocab_booster");
+		const prompt = await getDirective("vocab_booster");
 		await ctx.msg.editText(`Текущий промт \n\n${prompt}`, {
 			parse_mode: "HTML",
 		});
@@ -51,7 +48,7 @@ const promptsMenu = new Menu("promptsMenu")
 	})
 	.row()
 	.text("Upgrade", async (ctx) => {
-		const prompt = getDirective("IELTS_essay_upgrade");
+		const prompt = await getDirective("IELTS_essay_upgrade");
 		await ctx.msg.editText(`Текущий промт \n\n${prompt}`, {
 			parse_mode: "HTML",
 		});
