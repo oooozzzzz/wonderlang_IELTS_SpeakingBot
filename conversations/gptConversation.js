@@ -16,40 +16,11 @@ const {
 } = require("../services");
 const { confirmKeyboard } = require("../keyboards/confirmKeyboard");
 
-const gptCorrection = async (conversation, ctx) => {
-	const question = await ctx.reply(
-		"По какой теме вам нужно побольше слов, идиом и словосочетаний? Напишите тему по-английски.",
-		{
-			reply_markup: cancelKeyboard,
-		}
-	);
-	const messageCtx = await conversation.wait();
-	const message = messageCtx.message?.text;
-	if (!message) {
-		try {
-			await messageCtx.msg.delete();
-		} catch (error) {}
-		await ctx.reply("Операция отменена", {
-			reply_markup: toMainMenuKeyboard(),
-		});
-		return;
-	} else {
-		ctx.api.sendChatAction(ctx.chat.id, "typing");
-		const response = await getGPTanswer(message, getDirective("correction"));
-		// await replyWithWordDocument(response, ctx, message, "correction");
-		await ctx.reply(response, { reply_markup: toMainMenuKeyboard() });
-
-		try {
-			ctx.api.deleteMessage(question.chat.id, question.message_id);
-		} catch (error) {}
-	}
-};
-
 const part1Conversation = async (conversation, ctx) => {
 	const questionText = await getGPTAnswerWithContext(
 		ctx.from.id,
 		"random topics",
-		getDirective("part1")
+		await getDirective("part1")
 	);
 
 	const question = await ctx.reply(questionText, {
@@ -77,7 +48,7 @@ const part1Conversation = async (conversation, ctx) => {
 					await getGPTAnswerWithContext(
 						ctx.from.id,
 						"random topics",
-						getDirective("part1")
+						await getDirective("part1")
 					),
 					{ reply_markup: rerollKeyboard }
 				);
@@ -102,6 +73,12 @@ const part1Conversation = async (conversation, ctx) => {
 				{ reply_markup: confirmKeyboard }
 			);
 			break;
+		} else {
+			clearGPTContext(ctx.from.id)
+			await ctx.reply("Операция прервана", {
+				reply_markup: toMainMenuKeyboard(),
+			});
+			break;
 		}
 	} while (!toStop);
 };
@@ -110,7 +87,7 @@ const part2Conversation = async (conversation, ctx) => {
 	const questionText = await getGPTAnswerWithContext(
 		ctx.from.id,
 		"random topics",
-		getDirective("part2")
+		await getDirective("part2")
 	);
 
 	const question = await ctx.reply(questionText, {
@@ -138,7 +115,7 @@ const part2Conversation = async (conversation, ctx) => {
 					await getGPTAnswerWithContext(
 						ctx.from.id,
 						"random topics",
-						getDirective("part2")
+						await getDirective("part2")
 					),
 					{ reply_markup: rerollKeyboard }
 				);
@@ -163,6 +140,12 @@ const part2Conversation = async (conversation, ctx) => {
 				{ reply_markup: confirmKeyboard }
 			);
 			break;
+		} else {
+			clearGPTContext(ctx.from.id)
+			await ctx.reply("Операция прервана", {
+				reply_markup: toMainMenuKeyboard(),
+			});
+			break;
 		}
 	} while (!toStop);
 };
@@ -171,7 +154,7 @@ const part3Conversation = async (conversation, ctx) => {
 	const questionText = await getGPTAnswerWithContext(
 		ctx.from.id,
 		"random topics",
-		getDirective("part3")
+		await getDirective("part3")
 	);
 
 	const question = await ctx.reply(questionText, {
@@ -199,7 +182,7 @@ const part3Conversation = async (conversation, ctx) => {
 					await getGPTAnswerWithContext(
 						ctx.from.id,
 						"random topics",
-						getDirective("part3")
+						await getDirective("part3")
 					),
 					{ reply_markup: rerollKeyboard }
 				);
@@ -224,6 +207,12 @@ const part3Conversation = async (conversation, ctx) => {
 				{ reply_markup: confirmKeyboard }
 			);
 			break;
+		} else {
+			clearGPTContext(ctx.from.id)
+			await ctx.reply("Операция прервана", {
+				reply_markup: toMainMenuKeyboard(),
+			});
+			break;
 		}
 	} while (!toStop);
 };
@@ -247,7 +236,7 @@ const vocabBooster = async (conversation, ctx) => {
 		return;
 	} else {
 		ctx.api.sendChatAction(ctx.chat.id, "typing");
-		const response = await getGPTanswer(message, getDirective("vocab_booster"));
+		const response = await getGPTanswer(message, await getDirective("vocab_booster"));
 		// await replyWithWordDocument(response, ctx, message, "vocab_booster");
 		await ctx.reply(response, { reply_markup: toMainMenuKeyboard() });
 		await ctx.api.sendMessage(
@@ -281,7 +270,7 @@ const essayUpgrade = async (conversation, ctx) => {
 		ctx.api.sendChatAction(ctx.chat.id, "typing");
 		const response = await getGPTanswer(
 			message,
-			getDirective("IELTS_essay_upgrade")
+			await getDirective("IELTS_essay_upgrade")
 		);
 		// await replyWithWordDocument(response, ctx, message, "IELTS_essay_upgrade");
 		await ctx.reply(response, { reply_markup: toMainMenuKeyboard() });
@@ -314,7 +303,7 @@ const part1ThemeConversation = async (conversation, ctx) => {
 		const questions = await getGPTAnswerWithContext(
 			ctx.from.id,
 			theme,
-			getDirective("part1")
+			await getDirective("part1")
 		);
 		const question = await ctx.reply(questions, {
 			reply_markup: rerollKeyboard,
@@ -341,7 +330,7 @@ const part1ThemeConversation = async (conversation, ctx) => {
 						await getGPTAnswerWithContext(
 							ctx.from.id,
 							theme,
-							getDirective("part1")
+							await getDirective("part1")
 						),
 						{ reply_markup: rerollKeyboard }
 					);
@@ -365,6 +354,12 @@ const part1ThemeConversation = async (conversation, ctx) => {
 					`Part_1\n${transcription}\n\nЕсли в расшифровке есть ошибки, отправьте сообщение с исправленным текстом`,
 					{ reply_markup: confirmKeyboard }
 				);
+				break;
+			} else {
+				clearGPTContext(ctx.from.id)
+				await ctx.reply("Операция прервана", {
+					reply_markup: toMainMenuKeyboard(),
+				});
 				break;
 			}
 		} while (!toStop);
@@ -390,7 +385,7 @@ const part2ThemeConversation = async (conversation, ctx) => {
 		const questions = await getGPTAnswerWithContext(
 			ctx.from.id,
 			theme,
-			getDirective("part2")
+			await getDirective("part2")
 		);
 		const question = await ctx.reply(questions, {
 			reply_markup: rerollKeyboard,
@@ -417,7 +412,7 @@ const part2ThemeConversation = async (conversation, ctx) => {
 						await getGPTAnswerWithContext(
 							ctx.from.id,
 							theme,
-							getDirective("part2")
+							await getDirective("part2")
 						),
 						{ reply_markup: rerollKeyboard }
 					);
@@ -441,6 +436,12 @@ const part2ThemeConversation = async (conversation, ctx) => {
 					`Part_2\n${transcription}\n\nЕсли в расшифровке есть ошибки, отправьте сообщение с исправленным текстом`,
 					{ reply_markup: confirmKeyboard }
 				);
+				break;
+			} else {
+				clearGPTContext(ctx.from.id)
+				await ctx.reply("Операция прервана", {
+					reply_markup: toMainMenuKeyboard(),
+				});
 				break;
 			}
 		} while (!toStop);
@@ -466,7 +467,7 @@ const part3ThemeConversation = async (conversation, ctx) => {
 		const questions = await getGPTAnswerWithContext(
 			ctx.from.id,
 			theme,
-			getDirective("part3")
+			await getDirective("part3")
 		);
 		const question = await ctx.reply(questions, {
 			reply_markup: rerollKeyboard,
@@ -493,7 +494,7 @@ const part3ThemeConversation = async (conversation, ctx) => {
 						await getGPTAnswerWithContext(
 							ctx.from.id,
 							theme,
-							getDirective("part3")
+							await getDirective("part3")
 						),
 						{ reply_markup: rerollKeyboard }
 					);
@@ -517,6 +518,12 @@ const part3ThemeConversation = async (conversation, ctx) => {
 					`Part_3\n${transcription}\n\nЕсли в расшифровке есть ошибки, отправьте сообщение с исправленным текстом`,
 					{ reply_markup: confirmKeyboard }
 				);
+				break;
+			} else {
+				clearGPTContext(ctx.from.id)
+				await ctx.reply("Операция прервана", {
+					reply_markup: toMainMenuKeyboard(),
+				});
 				break;
 			}
 		} while (!toStop);
@@ -647,7 +654,6 @@ const changeEssayUpgraderPrompt = async (conversation, ctx) => {
 };
 
 module.exports = {
-	gptCorrection,
 	vocabBooster,
 	essayUpgrade,
 	changeVocabBoosterPrompt,

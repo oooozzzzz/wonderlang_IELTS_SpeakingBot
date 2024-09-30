@@ -51,3 +51,14 @@ model Discount {
 
   @@unique([label, tg_id], name: "labelId")
 }
+
+model Password {
+  label String @id
+  value String
+}
+
+model Prompt {
+  label String @id
+  value String
+}
+

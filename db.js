@@ -188,3 +188,57 @@ module.exports.outdateDiscount = async (id) => {
 		return false;
 	}
 };
+
+module.exports.getOwnerPassword = async () => {
+	try {
+		const password = await prisma.password.findUnique({
+			where: { label: "owner" },
+			select: { value: true },
+		});
+		return password.value;
+	} catch (error) {
+		return false;
+	}
+};
+
+module.exports.setPassrword = async (label, value) => {
+	try {
+		await prisma.password.update({ where: { label }, data: { value } });
+	} catch (error) {
+		return false;
+	}
+};
+
+module.exports.setPrompt = async (label, value) => {
+	try {
+		await prisma.prompt.update({ where: { label }, data: { value } });
+	} catch (error) {
+		return false;
+	}
+};
+
+module.exports.getAdminPassword = async () => {
+	try {
+		const password = await prisma.password.findUnique({
+			where: { label: "admin" },
+			select: { value: true },
+		});
+		return password.value;
+	} catch (error) {
+		console.log(error)
+		return false;
+	}
+};
+
+module.exports.getPrompt = async (label) => {
+	try {
+		const password = await prisma.prompt.findUnique({
+			where: { label },
+			select: { value: true },
+		});
+		return password.value;
+	} catch (error) {
+		console.log(error)
+		return false;
+	}
+}

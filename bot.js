@@ -14,9 +14,7 @@ const { notifyUsers } = require("./conversations/notifyUsers");
 const { createPoll } = require("./conversations/createPoll");
 const {
 	gptConversation,
-	gptCorrection,
 	vocabBooster,
-	changeCorrectionPrompt,
 	changeVocabBoosterPrompt,
 	essayUpgrade,
 	changeEssayUpgraderPrompt,
@@ -69,7 +67,6 @@ bot.use(createConversation(changeAdminPassword));
 bot.use(createConversation(changeOwnerPassword));
 bot.use(createConversation(createPoll));
 bot.use(createConversation(notifyUsers));
-bot.use(createConversation(gptCorrection));
 bot.use(createConversation(vocabBooster));
 bot.use(createConversation(essayUpgrade));
 bot.use(createConversation(changePart1Prompt));

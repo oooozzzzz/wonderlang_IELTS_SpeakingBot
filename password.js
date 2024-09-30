@@ -1,18 +1,13 @@
-let adminPassword = 'admin'
-let ownerPassword = 'owner'
+const { setPassrword } = require("./db");
 
-const setNewAdminPassword = (newPassword) => {
-	adminPassword = newPassword
-	console.log('New admin password set:', adminPassword)
-}
+const setNewAdminPassword = async (newPassword) => {
+	await setPassrword("admin", newPassword);
+	console.log("New admin password set");
+};
 
-const setNewOwnerPassword = (newPassword) => {
-	ownerPassword = newPassword
-	console.log('New owner password set:', ownerPassword)
-}
+const setNewOwnerPassword = async (newPassword) => {
+	await setPassrword("owner", newPassword);
+	console.log("New owner password set");
+};
 
-const getAdminPassword = () => adminPassword
-const getOwnerPassword = () => ownerPassword
-
-
-module.exports = {getAdminPassword, setNewAdminPassword, setNewOwnerPassword, getOwnerPassword}
+module.exports = { setNewAdminPassword, setNewOwnerPassword };
