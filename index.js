@@ -17,6 +17,7 @@ const { clearGPTContext } = require("./context");
 const { toMainMenuKeyboard } = require("./keyboards/toMainMenuKeyboard");
 const { InputFile } = require("grammy");
 const { getAdminPassword, getOwnerPassword } = require("./db");
+const AIHandler = require("./handlers/AIHandler");
 
 bot.command("start", (ctx) => startHandler(ctx));
 bot.command("chat_id", async (ctx) => {
@@ -72,6 +73,7 @@ bot.on(":text", async (ctx) => {
 			await ownerHandler(ctx);
 			break;
 		default:
+			await AIHandler(ctx);
 			break;
 	}
 });
