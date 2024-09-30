@@ -213,6 +213,7 @@ module.exports.setPrompt = async (label, value) => {
 	try {
 		await prisma.prompt.update({ where: { label }, data: { value } });
 	} catch (error) {
+		console.log(error.message);
 		return false;
 	}
 };
