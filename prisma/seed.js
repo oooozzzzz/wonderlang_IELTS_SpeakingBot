@@ -27,7 +27,7 @@ async function main() {
 		data: { label: "IELTS_essay_upgrade", value: "You are an IELTS tutor helping a student prepare for the Speaking paper. I will send you the script of a student's response. Please, improve the response by including 7 B2/C1-level words, idioms or collocations relevant to the topic. Write the vocabulary you’ve added in capitals. Then provide a list of the words you’ve added with their definitions."}
 	})
 
-	console.log(part1, part2, part3, vocab_booster, IELTS_essay_upgrade);
+	console.log(adminPass, ownerPass, part1, part2, part3, vocab_booster, IELTS_essay_upgrade);
 }
 main()
   .then(async () => {
