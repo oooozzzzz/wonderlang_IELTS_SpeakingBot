@@ -17,42 +17,42 @@ const adminMenu = new Menu("adminMenu")
 const promptsMenu = new Menu("promptsMenu")
 	.text("Part1", async (ctx) => {
 		const prompt = await getDirective("part1");
+		ctx.menu.nav("changePart1Menu");
 		await ctx.msg.editText(`Текущий промт \n\n${prompt}`, {
 			parse_mode: "HTML",
 		});
-		ctx.menu.nav("changePart1Menu");
 	})
 	.row()
 	.text("Part2", async (ctx) => {
 		const prompt = await getDirective("part2");
+		ctx.menu.nav("changePart2Menu");
 		await ctx.msg.editText(`Текущий промт \n\n${prompt}`, {
 			parse_mode: "HTML",
 		});
-		ctx.menu.nav("changePart2Menu");
 	})
 	.row()
 	.text("Part3", async (ctx) => {
 		const prompt = await getDirective("part3");
+		ctx.menu.nav("changePart3Menu");
 		await ctx.msg.editText(`Текущий промт \n\n${prompt}`, {
 			parse_mode: "HTML",
 		});
-		ctx.menu.nav("changePart3Menu");
 	})
 	.row()
 	.text("Vocabularly", async (ctx) => {
 		const prompt = await getDirective("vocab_booster");
+		ctx.menu.nav("changeVocabBoosterMenu");
 		await ctx.msg.editText(`Текущий промт \n\n${prompt}`, {
 			parse_mode: "HTML",
 		});
-		ctx.menu.nav("changeVocabBoosterMenu");
 	})
 	.row()
 	.text("Upgrade", async (ctx) => {
 		const prompt = await getDirective("IELTS_essay_upgrade");
+		ctx.menu.nav("changeEssayUpgradeMenu");
 		await ctx.msg.editText(`Текущий промт \n\n${prompt}`, {
 			parse_mode: "HTML",
 		});
-		ctx.menu.nav("changeEssayUpgradeMenu");
 	})
 	.row()
 	.text(
