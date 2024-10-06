@@ -74,7 +74,7 @@ const part1Conversation = async (conversation, ctx) => {
 			);
 			break;
 		} else {
-			clearGPTContext(ctx.from.id)
+			clearGPTContext(ctx.from.id);
 			await ctx.reply("Операция прервана", {
 				reply_markup: toMainMenuKeyboard(),
 			});
@@ -124,7 +124,9 @@ const part2Conversation = async (conversation, ctx) => {
 			continue;
 		} else if (data === "cancel") {
 			toStop = true;
-			await response.msg.delete();
+			try {
+				response.msg.delete();
+			} catch (error) {}
 			await ctx.reply("Операция отменена", {
 				reply_markup: toMainMenuKeyboard(),
 			});
@@ -141,7 +143,7 @@ const part2Conversation = async (conversation, ctx) => {
 			);
 			break;
 		} else {
-			clearGPTContext(ctx.from.id)
+			clearGPTContext(ctx.from.id);
 			await ctx.reply("Операция прервана", {
 				reply_markup: toMainMenuKeyboard(),
 			});
@@ -208,7 +210,7 @@ const part3Conversation = async (conversation, ctx) => {
 			);
 			break;
 		} else {
-			clearGPTContext(ctx.from.id)
+			clearGPTContext(ctx.from.id);
 			await ctx.reply("Операция прервана", {
 				reply_markup: toMainMenuKeyboard(),
 			});
@@ -236,7 +238,10 @@ const vocabBooster = async (conversation, ctx) => {
 		return;
 	} else {
 		ctx.api.sendChatAction(ctx.chat.id, "typing");
-		const response = await getGPTanswer(message, await getDirective("vocab_booster"));
+		const response = await getGPTanswer(
+			message,
+			await getDirective("vocab_booster")
+		);
 		// await replyWithWordDocument(response, ctx, message, "vocab_booster");
 		await ctx.reply(response, { reply_markup: toMainMenuKeyboard() });
 		await ctx.api.sendMessage(
@@ -356,8 +361,7 @@ const part1ThemeConversation = async (conversation, ctx) => {
 				);
 				break;
 			} else {
-
-				clearGPTContext(ctx.from.id)
+				clearGPTContext(ctx.from.id);
 				await ctx.reply("Операция прервана", {
 					reply_markup: toMainMenuKeyboard(),
 				});
@@ -439,7 +443,7 @@ const part2ThemeConversation = async (conversation, ctx) => {
 				);
 				break;
 			} else {
-				clearGPTContext(ctx.from.id)
+				clearGPTContext(ctx.from.id);
 				await ctx.reply("Операция прервана", {
 					reply_markup: toMainMenuKeyboard(),
 				});
@@ -521,7 +525,7 @@ const part3ThemeConversation = async (conversation, ctx) => {
 				);
 				break;
 			} else {
-				clearGPTContext(ctx.from.id)
+				clearGPTContext(ctx.from.id);
 				await ctx.reply("Операция прервана", {
 					reply_markup: toMainMenuKeyboard(),
 				});
