@@ -7,7 +7,7 @@ const startMenu = new Menu("startMenu", { autoAnswer: true })
 	.text("Train", async (ctx) => {
 		if (await isChatMember(-1002430837732, ctx.from.id, ctx)) {
 			ctx.menu.nav("trainMenu");
-			clearGPTContext(ctx.from.id)
+			clearGPTContext(ctx.from.id);
 		} else {
 			await ctx.api.answerCallbackQuery(ctx.update.callback_query.id, {
 				text: "У вас нет доступа",
@@ -18,8 +18,10 @@ const startMenu = new Menu("startMenu", { autoAnswer: true })
 	.row()
 	.text("Vocabulary", async (ctx) => {
 		if (await isChatMember(-1002430837732, ctx.from.id, ctx)) {
-			// await ctx.msg.delete();
-			clearGPTContext(ctx.from.id)
+			try {
+				ctx.msg.delete();
+			} catch (error) {}
+			clearGPTContext(ctx.from.id);
 			await ctx.conversation.enter("vocabBooster");
 		} else {
 			await ctx.api.answerCallbackQuery(ctx.update.callback_query.id, {
@@ -31,8 +33,10 @@ const startMenu = new Menu("startMenu", { autoAnswer: true })
 	.row()
 	.text("Upgrade", async (ctx) => {
 		if (await isChatMember(-1002430837732, ctx.from.id, ctx)) {
-			await ctx.msg.delete();
-			clearGPTContext(ctx.from.id)
+			try {
+				ctx.msg.delete();
+			} catch (error) {}
+			clearGPTContext(ctx.from.id);
 			await ctx.conversation.enter("essayUpgrade");
 		} else {
 			await ctx.api.answerCallbackQuery(ctx.update.callback_query.id, {
