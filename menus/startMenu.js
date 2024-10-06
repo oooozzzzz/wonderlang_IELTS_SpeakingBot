@@ -18,7 +18,7 @@ const startMenu = new Menu("startMenu", { autoAnswer: true })
 	.row()
 	.text("Vocabulary", async (ctx) => {
 		if (await isChatMember(-1002430837732, ctx.from.id, ctx)) {
-			await ctx.msg.delete();
+			// await ctx.msg.delete();
 			clearGPTContext(ctx.from.id)
 			await ctx.conversation.enter("vocabBooster");
 		} else {
