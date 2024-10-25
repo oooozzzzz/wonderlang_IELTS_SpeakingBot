@@ -10,6 +10,7 @@ const {
 	getNotifications,
 	userGetsNotifications,
 } = require("./db");
+require("dotenv").config()
 const { toAdminMenuKeyboard } = require("./keyboards/toAdminMenuKeyboard");
 const { toMainMenuKeyboard } = require("./keyboards/toMainMenuKeyboard");
 const officegen = require("officegen");
