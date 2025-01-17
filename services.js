@@ -10,7 +10,7 @@ const {
 	getNotifications,
 	userGetsNotifications,
 } = require("./db");
-require("dotenv").config()
+require("dotenv").config();
 const { toAdminMenuKeyboard } = require("./keyboards/toAdminMenuKeyboard");
 const { toMainMenuKeyboard } = require("./keyboards/toMainMenuKeyboard");
 const officegen = require("officegen");
@@ -55,12 +55,12 @@ module.exports.copyMessageToUsers = async (ctx) => {
 	const { success, failure, atAll } = await processUsersList(
 		usersList,
 		copy,
-		ctx
+		ctx,
 	);
 	await ctx.reply(
 		`Всего отправлено сообщений пользователям: ${atAll}
 Успешно: ${success}, с ошибками: ${failure}.`,
-		{ reply_markup: toAdminMenuKeyboard }
+		{ reply_markup: toAdminMenuKeyboard },
 	);
 };
 
@@ -182,10 +182,8 @@ module.exports.createWordFile = (text, username, work) => {
 		docx.generate(out);
 
 		out.on("close", async () => {
-			resolve(path)
-
+			resolve(path);
 		});
-		
 	});
 };
 
@@ -206,7 +204,7 @@ const downloadRecord = (url, file) => {
 
 module.exports.isChatMember = async (chatId, userId, ctx) => {
 	const chatMember = await ctx.api.getChatMember(chatId, userId);
-	return chatMember.status != "left";
+	return chatMember.status == "member";
 };
 
 module.exports.getFileLink = async (ctx) => {
@@ -229,14 +227,14 @@ const getTranscription = async (filePath) => {
 	return response;
 };
 module.exports.getTranscription = async (ctx) => {
-	const url = await getFileLink(ctx)
-	const path = `voices/${ctx.from.username}.oga`
+	const url = await getFileLink(ctx);
+	const path = `voices/${ctx.from.username}.oga`;
 	await downloadRecord(url, path);
 	const transcription = await client.audio.transcriptions.create({
 		file: fs.createReadStream(path),
 		model: "whisper-1",
 	});
-	console.log("Record is sent to ChatGPT")
+	console.log("Record is sent to ChatGPT");
 	deleteFile(path);
 	const response = transcription.text;
 	return response;
@@ -265,7 +263,7 @@ module.exports.replyOnTranscription = (url, file, ctx, command) => {
 			const transcription = await getTranscription(file);
 			const answer = await getGPTanswer(
 				transcription,
-				"You are an IELTS Speaking examiner. Please, give me 4 questions from part 1 of a Speaking paper. After I answer, evaluate my response according to the official IELTS criteria. Please, make a table, in which you should include 4 columns: IELTS speaking grading criterium (exclude Pronunciation) + Score Quote from the official criteria justifying the score Quotes from the response that justify the score Explanation of the mistake. At the end of the table provide an overall grade."
+				"You are an IELTS Speaking examiner. Please, give me 4 questions from part 1 of a Speaking paper. After I answer, evaluate my response according to the official IELTS criteria. Please, make a table, in which you should include 4 columns: IELTS speaking grading criterium (exclude Pronunciation) + Score Quote from the official criteria justifying the score Quotes from the response that justify the score Explanation of the mistake. At the end of the table provide an overall grade.",
 			);
 			await ctx.reply(transcription);
 			console.log(transcription);
@@ -285,29 +283,28 @@ module.exports.answerVoiceWithGPT = async (ctx, directive = "") => {
 	const reply = await getGPTAnswerWithContext(
 		ctx.from.id,
 		transcription,
-		directive
+		directive,
 	);
 	return reply;
 };
 
-
 module.exports.filterEnglishText = (text) => {
-  var englishText = '';
+	var englishText = "";
 
-  // Проверяем каждый символ текста
-  for (var i = 0; i < text.length; i++) {
-    var char = text[i];
+	// Проверяем каждый символ текста
+	for (var i = 0; i < text.length; i++) {
+		var char = text[i];
 
-    // Проверяем, является ли символ латинской буквой
-    if (
-      (char >= 'a' && char <= 'z') ||
-      (char >= 'A' && char <= 'Z') ||
-      char === ' ' ||
-      char === '\n'
-    ) {
-      englishText += char; // Добавляем символ к английскому тексту
-    }
-  }
+		// Проверяем, является ли символ латинской буквой
+		if (
+			(char >= "a" && char <= "z") ||
+			(char >= "A" && char <= "Z") ||
+			char === " " ||
+			char === "\n"
+		) {
+			englishText += char; // Добавляем символ к английскому тексту
+		}
+	}
 
-  return englishText;
-}
+	return englishText;
+};
