@@ -3,7 +3,7 @@ const { myDiscountsMenu } = require("./myDiscountsMenu");
 const { createWordDocument, isChatMember } = require("../services");
 const { clearGPTContext } = require("../context");
 
-const startMenu = new Menu("startMenu", { autoAnswer: true })
+const startMenu = new Menu("startMenu", { autoAnswer: false })
 	.text("Vocabulary", async (ctx) => {
 		if (await isChatMember(-1002430837732, ctx.from.id, ctx)) {
 			try {
@@ -47,7 +47,7 @@ const startMenu = new Menu("startMenu", { autoAnswer: true })
 	});
 
 const finishConversationMenu = new Menu("finishConversationMenu").back(
-	"Продолжить работу с ботом"
+	"Продолжить работу с ботом",
 );
 
 const backToMenu = new Menu("finishConversationMenu").text(
@@ -55,7 +55,7 @@ const backToMenu = new Menu("finishConversationMenu").text(
 	async (ctx) => {
 		ctx.menu.nav("startMenu");
 		await ctx.msg.editText(ctx.t("start"));
-	}
+	},
 );
 
 const trainMenu = new Menu("trainMenu")
