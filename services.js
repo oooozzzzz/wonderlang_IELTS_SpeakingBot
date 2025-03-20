@@ -204,7 +204,11 @@ const downloadRecord = (url, file) => {
 
 module.exports.isChatMember = async (chatId, userId, ctx) => {
 	const chatMember = await ctx.api.getChatMember(chatId, userId);
-	return chatMember.status == "member";
+	const result =
+		chatMember.status == "member" ||
+		chatMember.status == "creator" ||
+		chatMember.status == "administrator";
+	return result;
 };
 
 module.exports.getFileLink = async (ctx) => {
