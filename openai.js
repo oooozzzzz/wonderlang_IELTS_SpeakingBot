@@ -2,7 +2,7 @@ const { default: OpenAI } = require("openai");
 require("dotenv").config()
 
 const client = new OpenAI({
-	apiKey: "sk-SiAS5ZNivSumN9eFmHq4Xpx4JkDRleCA",
+	apiKey: process.env.OPENAI,
 	baseURL: "https://api.proxyapi.ru/openai/v1/",
 });
 
